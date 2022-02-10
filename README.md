@@ -1,6 +1,6 @@
 # cs-344-Memory-Allocator
 
-#Introduction
+## Introduction
 
 This is a multi part project, each part taking one week. This is part 1.
 
