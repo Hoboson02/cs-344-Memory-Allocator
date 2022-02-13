@@ -8,23 +8,16 @@ void *myalloc(int temp) {
     	head->next = NULL;
     	head->size = 1024 - PADDED_SIZE(sizeof(struct block));
     	head->in_use = 0;
+
+        struct block *cur;
+
+        // ... All the machinations to allocate go here ...
+
+        int padded_block_size = PADDED_SIZE(sizeof(struct block));
+
+        return PTR_OFFSET(cur, padded_block_size);
 	}
 }
-
-int main(void) {
-	void *p;
-    print_data();
-    p = myalloc(16);
-    print_data();
-    p = myalloc(16);
-    printf("%p\n", p);
-}
-
-struct block {
-    struct block *next;
-    int size;     // Bytes
-    int in_use;   // Boolean
-};
 
 void print_data(void) {
     struct block *b = head;
@@ -46,4 +39,13 @@ void print_data(void) {
     }
 
     printf("\n");
+}
+
+int main(void) {
+	void *p;
+    print_data();
+    p = myalloc(16);
+    print_data();
+    p = myalloc(16);
+    printf("%p\n", p);
 }
