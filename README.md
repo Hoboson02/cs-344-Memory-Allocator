@@ -16,6 +16,8 @@ What malloc() does is to micromanage this big space, making it look to a process
 
 This is the overview for myalloc() for this week. Note that this is an incomplete implementation, but we'll be working more on it in the following weeks.
 
+## What to Do
+
 - If this is the first call, sbrk() to get some space.
     - At the same time, build a linked-list node inside the new space indicating its size and "in-use" status.
 - Walk the linked list in a loop and look for the first node that is:
