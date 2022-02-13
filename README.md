@@ -4,8 +4,6 @@
 
 This is a multi part project, each part taking one week. This is part 1.
 
-Hint: before you type a line of code, you should understand this problem well enough to teach it to someone to the degree they could work an example with pen and paper. It will be much harder to implement if you do not understand it well enough. This advice is always true, but I want to really drive it home for this project where it is especially true.
-
 We're going to write a malloc()/free() implementation from scratch!
 
 You may NOT use malloc() or any of its relatives (e.g. calloc()), free(), or mmap() for this project. Solutions that use these functions will not be accepted.
@@ -15,3 +13,16 @@ When you request more data segment space from the OS with sbrk(), it increases t
 There are no holes in this memory--it's one big piece.
 
 What malloc() does is to micromanage this big space, making it look to a process like it's split into a bunch of little ones.
+
+This is the overview for myalloc() for this week. Note that this is an incomplete implementation, but we'll be working more on it in the following weeks.
+
+- If this is the first call, sbrk() to get some space.
+    - At the same time, build a linked-list node inside the new space indicating its size and "in-use" status.
+- Walk the linked list in a loop and look for the first node that is:
+    - Not in-use
+    - Big enough to hold the requested amount (plus padding)
+- If the block is found:
+    - Mark it in-use.
+    - Return a pointer to the user data just after the linked list node (plus padding)).
+- If no such block is found:
+    - Return NULL
