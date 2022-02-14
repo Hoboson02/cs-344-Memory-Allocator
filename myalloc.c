@@ -1,22 +1,31 @@
+// Ryan Earl
+
 #include "myalloc.h"
 
 struct block *head = NULL;  // Head of the list, empty
 
 void *myalloc(int temp) {
-	if (head == NULL) {
+
+    struct block *cur, *prev;
+
+	if (head == NULL) { 
     	head = sbrk(1024);
     	head->next = NULL;
     	head->size = 1024 - PADDED_SIZE(sizeof(struct block));
     	head->in_use = 0;
 
-        struct block *cur;
-
-        // ... All the machinations to allocate go here ...
-
-        int padded_block_size = PADDED_SIZE(sizeof(struct block));
-
-        return PTR_OFFSET(cur, padded_block_size);
+        
 	}
+
+    cur = head;
+
+    while (((cur->in_use) == 1) && (((cur->next) != NULL) || (PADDED_SIZE(temp) <= cur->size))) {
+        
+        
+        int padded_struct_block_size = PADDED_SIZE(sizeof(struct block));
+
+        return PTR_OFFSET(cur, padded_struct_block_size);
+    }
 }
 
 void print_data(void) {
