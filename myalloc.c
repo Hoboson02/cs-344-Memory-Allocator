@@ -19,13 +19,21 @@ void *myalloc(int temp) {
 
     cur = head;
 
-    while (((cur->in_use) == 1) && (((cur->next) != NULL) || (PADDED_SIZE(temp) <= cur->size))) {
+    while (((cur->in_use) == 1) && (((cur->next) != NULL) || ((cur->size) < temp))) {
         
-        
-        int padded_struct_block_size = PADDED_SIZE(sizeof(struct block));
-
-        return PTR_OFFSET(cur, padded_struct_block_size);
+        prev = cur;
+        cur = cur->next;
     }
+
+    if (temp <= (cur->size)) {
+        cur->in_use = 1;
+    }
+
+    else { return NULL; }
+    
+    unsigned long padded_struct_block_size = PADDED_SIZE(sizeof(struct block));
+
+    return PTR_OFFSET(cur, padded_struct_block_size);
 }
 
 void print_data(void) {
